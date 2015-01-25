@@ -4,8 +4,25 @@ from django.http import HttpResponse
 from bespeak_meal.models import Week_menu, Person, Order
 
 def index(request):
+    (person_list, week_menu, b, l) = _get_info()
+    context = {'person_list': person_list,
+        'week_menu': week_menu,
+        'breakfast_deadline': b,
+        'lunch_deadline': l,
+    }
+    return render(request, 'bespeak_meal/index.html', context)
+
+def order(request):
+    (person_list, week_menu, breakfast_deadline, lunch_deadline) = _get_info()
+    context = {
+        'person_list': person_list,
+        'week_menu': week_menu,
+    }
+    return render(request, 'bespeak_meal/order.html', context)
+
+def _get_info():
     person_list = Person.objects.all()
-    menu = Week_menu.objects.get(pk=1) # 【待优化】由系统部署初始化来确保唯一实例
+    menu = Week_menu.objects.get(pk=1) # 【待优化】目前需要由系统部署初始化来确保唯一实例
     b, l = (menu.breakfast_deadline, menu.lunch_deadline)
     week_menu = [ #【待优化】这个表达式怎么看都觉得丑陋
         (menu.menus[0].verbose_name, menu.mon),
@@ -16,12 +33,4 @@ def index(request):
         (menu.menus[5].verbose_name, menu.sat),
         (menu.menus[6].verbose_name, menu.sun),
     ]
-    context = {'person_list': person_list,
-        'week_menu': week_menu,
-        'breakfast_deadline': b,
-        'lunch_deadline': l,
-    }
-    return render(request, 'bespeak_meal/index.html', context)
-
-def order(request):
-    return HttpResponse('ordering')
+    return (person_list, week_menu, b, l)

@@ -1,0 +1,15 @@
+<h1>选择人员</h1>
+<table>
+{% for p in person_list %}
+    <tr><td>{{ p.name }}</td> <td></td> <td></td></tr>
+{% endfor %}
+</table>
+
+
+
+<h1>菜谱</h1>
+<table>
+{% for week, menu in week_menu %}
+    <tr><td>{{ week }}</td><td>{{ menu }}</td></tr>
+{% endfor %}
+</table>

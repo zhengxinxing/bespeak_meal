@@ -14,13 +14,11 @@ class Person(models.Model):
         return self.name
 
 class Person_category(models.Model):
-
     name = models.CharField('人员类别', max_length=100, unique=True) # unique为了防止重名
     remarks = models.CharField('备注', blank=True, max_length=500)
     breakfast_charge = models.IntegerField('早餐收费', default=2, blank=False)
     lunch_charge = models.IntegerField('午餐收费')
     dinner_charge = models.IntegerField('晚餐收费', default=0)
-
 
     class Meta:
         verbose_name = '人员类别'
