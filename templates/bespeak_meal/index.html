@@ -1,0 +1,22 @@
+
+<h1>我要订餐</h1>
+<a href="">点击此处订餐</a>
+
+{% if person_list %}
+    <h1> 今日订餐情况统计 </h1>
+    <p>早餐——昨日 {{ breakfast_deadline }} 点前；午餐——今日 {{ lunch_deadline }} 点前</p>
+    <table>
+    {% for person in person_list %}
+        <tr><td>{{ person.name }}</td><td>{{ person.category }}</td></tr>
+    {% endfor %}
+    </table>
+
+    <h1>菜谱</h1>
+    <table>
+    {% for week, menu in week_menu %}
+        <tr><td>{{ week }}</td><td>{{ menu }}</td></tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p> 订餐系统首次运行，数据初始化中，敬请期待！    </p>
+{% endif %}
